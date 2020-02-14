@@ -66,6 +66,11 @@ func RunWatcher(config Config) {
 					break
 				}
 
+				// filter sync-go-config.json
+				if strings.Compare(event.Name(), "sync-go-config.json") == 0 {
+					break
+				}
+
 				// filter event
 				if event.Op == watcher.Chmod {
 					break
