@@ -6,4 +6,7 @@ prepare:
 	go get -u github.com/radovskyb/watcher/...
 
 build:
-	go build -o sync-go
+	go build
+
+install:
+	go install

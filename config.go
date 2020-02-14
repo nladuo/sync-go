@@ -20,6 +20,7 @@ func (self Config) Save() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	fmt.Println()
 	fmt.Println(string(rs))
 	ioutil.WriteFile("sync-go-config.json", rs, 0666)
 }

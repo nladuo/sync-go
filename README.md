@@ -6,16 +6,19 @@ For common usage, the sftp syncronizer can be only used in local directory. If y
 
 For example, when I use [https://github.com/serkanyersen/sync](https://github.com/serkanyersen/sync) in local folder, it works well. But my purpose is to sync my local dir to a remote dir, and then sync this remote dir to another remote dir. When doing this, I found most of files would be zero size afther syncronizing. And I am aware of the network latency problem. So I create this project.
 
-## Install Dependencies
+## Simple to use
+use `sync-go init` to initialize the config, and then use `sync-go` to syncronize your folders.
+
+## Contribute to this Project
+#### Install Dependencies
 ``` bash
 make prepare
 ```
 
-## Build Project
+#### Build the Project
 ``` bash
 make
 ```
-
 
 ## LICENSE
 MIT

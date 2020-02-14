@@ -11,20 +11,26 @@ import (
 
 func initConfig() {
 	config := Config{}
+	fmt.Print("⫸ ")
 	color.New(color.FgLightGreen, color.Bold).Println("Initializing...")
 
+	color.Green.Print("? ")
 	color.New(color.FgLightWhite, color.Bold).Print("Username to connect: ")
 	fmt.Scanln(&config.Username)
 
+	color.Green.Print("? ")
 	color.New(color.FgLightWhite, color.Bold).Print("Enter your password: ")
 	fmt.Scanln(&config.Password)
 
+	color.Green.Print("? ")
 	color.New(color.FgLightWhite, color.Bold).Print("Hostname or IP to connect: ")
 	fmt.Scanln(&config.Host)
 
+	color.Green.Print("? ")
 	color.New(color.FgLightWhite, color.Bold).Print("Port to conenct: ")
 	fmt.Scanln(&config.Port)
 
+	color.Green.Print("? ")
 	color.New(color.FgLightWhite, color.Bold).Print("Remote Path: ")
 	fmt.Scanln(&config.RemoteDir)
 
@@ -36,8 +42,7 @@ func main() {
 		initConfig()
 	} else if len(os.Args) == 1 {
 		config := LoadConfig()
-		fmt.Println(config)
-		WatcherTest()
+		RunWatcher(config)
 	} else {
 		color.New(color.FgLightWhite, color.Bold).Println("Usage: ")
 		color.Green.Print("\tsyncgo init ")

@@ -5,18 +5,52 @@ import (
 	"io"
 	"log"
 	"os"
+	"path"
 	"time"
 
 	"github.com/pkg/sftp"
 	"golang.org/x/crypto/ssh"
 )
 
-func CopyFile(localpath, remotepath string) {
+func SftpCopyFile(localpath, remotepath string, config Config) {
+	sftpClient, err := connect(config.Username, config.Password, config.Host, config.Port)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer sftpClient.Close()
+	remotedir := path.Dir(remotepath)
+	// create remote dir
+	sftpClient.MkdirAll(remotedir)
 
+	// create destination file
+	dstFile, err := sftpClient.Create(remotepath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer dstFile.Close()
+
+	// create source file
+	srcFile, err := os.Open(localpath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// copy source file to destination file
+	_, err = io.Copy(dstFile, srcFile)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
-func DeleteFile(remotepath string) {
+func SftpDeleteFile(remotepath string, config Config) {
+	sftpClient, err := connect(config.Username, config.Password, config.Host, config.Port)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer sftpClient.Close()
 
+	// delete file
+	sftpClient.Remove(remotepath)
 }
 
 func connect(user, password, host string, port int) (*sftp.Client, error) {
@@ -52,46 +86,4 @@ func connect(user, password, host string, port int) (*sftp.Client, error) {
 	}
 
 	return sftpClient, nil
-}
-
-func TestSCP() {
-	sftpClient, err := connect("ljm", "l82566258", "tengxun", 22)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer sftpClient.Close()
-
-	// create destination file
-	dstFile, err := sftpClient.Create("/home/ljm/main.go")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer dstFile.Close()
-
-	err = sftpClient.Mkdir("3232")
-	if err != nil {
-		// log.Fatal(err)
-	}
-
-	// sftpClient.MkdirAll("/home/ljm/dsd/sdsds/232")
-
-	err = sftpClient.RemoveDirectory("/home/ljm/dsd")
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	sftpClient.Remove("/home/ljm/test.txt")
-
-	// create source file
-	srcFile, err := os.Open("./main.go")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// copy source file to destination file
-	bytes, err := io.Copy(dstFile, srcFile)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("%d bytes copied\n", bytes)
 }
