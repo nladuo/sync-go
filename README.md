@@ -24,12 +24,12 @@ And then use `sync-go` to syncronize your folders.
 ![](screenshot2.gif)
 
 ## Contribute to this Project
-#### Install Dependencies
+### Install Dependencies
 ``` bash
 make prepare
 ```
 
-#### Build the Project
+### Build the Project
 ``` bash
 make
 ```
