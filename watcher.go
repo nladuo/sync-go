@@ -31,7 +31,7 @@ func getFileMTime(name string) int64 {
 
 func checkFileWriting(path string) (bool, int64) {
 	mtime1 := getFileMTime(path)
-	time.Sleep(2 * time.Second)
+	time.Sleep(1 * time.Second)
 	mtime2 := getFileMTime(path)
 	// fmt.Println(mtime1, mtime2)
 	return mtime1 != mtime2, mtime2
